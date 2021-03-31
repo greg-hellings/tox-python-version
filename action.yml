@@ -12,13 +12,12 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Detect tox version based on factors
-      id: version
+    - id: version
       shell: python
       run: |
         import re
 
-        env = "${{ intputs.tox-env }}"
+        env = "${{ inputs.tox-env }}"
         factors = env.split("-")
         pyf = re.compile(r'(?P<pypy>py)?py(?P<version>\d+)')
         pyfactors = [pyf.match(f) for f in factors if pyf.match(f) is not None]
@@ -38,10 +37,8 @@ runs:
         else:
           version += factor_version[0] + '.' + factor_version[1:]
         print("::setoutput name=version::" + version)
-    - name: Setup Python
-      uses: actions/setup-python@v2
+    - uses: actions/setup-python@v2
       with:
         python-version: ${{ steps.version.outputs.version }}
-    - name: Run tox with args and get output
-      shell: bash
+    - shell: bash
       run: tox -e ${{ inputs.tox-env }} ${{ inputs.tox-args }}
