@@ -1,0 +1,36 @@
+name: Test running with all the factors
+
+jobs:
+  collect:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - windows-latest
+          - ubuntu-latest
+    outputs:
+      envs: "${{ steps.envs.outputs.tox-envs }}"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: greg-hellings/tox-list@v1
+        id: envs
+        with:
+          tox-args: -c tests/test_factors/
+
+  test:
+    runs-on: "${{ matrix.os }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - windows-latest
+          - ubuntu-latest
+        env: "${{ fromJson(needs.collect.outputs.envs }}"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          tox-env: ${{ matrix.env }}
+          tox-args: -c tests/test_factors/

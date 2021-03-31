@@ -5,6 +5,10 @@ inputs:
   tox-env:
     descrition: Tox environment to run
     required: true
+  tox-args:
+    description: Additional arguments to tox
+    required: true
+    default: ''
 runs:
   using: composite
   steps:
@@ -40,4 +44,4 @@ runs:
         python-version: ${{ steps.version.outputs.version }}
     - name: Run tox with args and get output
       shell: bash
-      run: tox -e ${{ inputs.tox-env }}
+      run: tox -e ${{ inputs.tox-env }} ${{ inputs.tox-args }}
