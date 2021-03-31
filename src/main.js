@@ -15,8 +15,8 @@ try {
 	});
 	// A factor that sets Python version was detected
 	if ( factors.length != 0 ) {
-		var strversion = factor.groups.version,
-		    pypy = factor.groups.pypy;
+		var strversion = factors[0].groups.version,
+		    pypy = factors[0].groups.pypy;
 		if ( pypy !== undefined) {
 			version = 'pypy-';
 		}
