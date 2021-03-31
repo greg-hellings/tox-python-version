@@ -6,8 +6,6 @@ name: Test running with all the factors
 
 jobs:
   test:
-    needs:
-      - collect
     runs-on: "${{ matrix.os }}"
     strategy:
       fail-fast: false
