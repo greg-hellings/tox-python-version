@@ -31,7 +31,7 @@ jobs:
           - macos-latest
           - windows-latest
           - ubuntu-latest
-        env: "${{ fromJson(needs.collect.outputs.envs }}"
+        env: "${{ fromJson(needs.collect.outputs.envs) }}"
     steps:
       - uses: actions/checkout@v2
       - uses: ./
