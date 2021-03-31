@@ -6,13 +6,7 @@ name: Test running with all the factors
 
 jobs:
   collect:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-          - macos-latest
-          - windows-latest
-          - ubuntu-latest
+    runs-on: ubuntu-latest
     outputs:
       envs: "${{ steps.envs.outputs.tox-envs }}"
     steps:
@@ -23,6 +17,8 @@ jobs:
           tox-args: -c tests/test_factors/
 
   test:
+    needs:
+      - collect
     runs-on: "${{ matrix.os }}"
     strategy:
       fail-fast: false
