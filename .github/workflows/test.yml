@@ -1,5 +1,9 @@
 name: Test running with all the factors
 
+"on":
+  push:
+  pull_request:
+
 jobs:
   collect:
     runs-on: ${{ matrix.os }}
