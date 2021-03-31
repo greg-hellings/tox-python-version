@@ -9,14 +9,13 @@ try {
 	// Check every factor to see if it matches
 	factors.forEach(function(item) {
 		var match = item.match(pyf);
-		if ( match ) {
+		if ( match )
 			pyfactors.push(match);
-		}
 	});
 	// A factor that sets Python version was detected
-	if ( factors.length != 0 ) {
-		var strversion = factors[0].groups.version,
-		    pypy = factors[0].groups.pypy;
+	if ( pyfactors.length != 0 ) {
+		var strversion = pyfactors[0].groups.version,
+		    pypy = pyfactors[0].groups.pypy;
 		if ( pypy !== undefined) {
 			version = 'pypy-';
 		}
