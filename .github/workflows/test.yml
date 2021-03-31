@@ -5,17 +5,6 @@ name: Test running with all the factors
   pull_request:
 
 jobs:
-  collect:
-    runs-on: ubuntu-latest
-    outputs:
-      envs: "${{ steps.envs.outputs.tox-envs }}"
-    steps:
-      - uses: actions/checkout@v2
-      - uses: greg-hellings/tox-list@v1
-        id: envs
-        with:
-          tox-args: -c tests/test_factors/
-
   test:
     needs:
       - collect
@@ -27,10 +16,23 @@ jobs:
           - macos-latest
           - windows-latest
           - ubuntu-latest
-        env: "${{ fromJson(needs.collect.outputs.envs) }}"
+        env:
+          - tox-env: py3
+            expected: '3.x'
+          - tox-env: py38
+            expected: '3.8'
+          - tox-env: lint-py38-foo
+            expected: '3.8'
+          - tox-env: py310-unit
+            expected: '3.10'
+          - tox-env: integration-py34
+            expected: '3.4'
     steps:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          tox-env: ${{ matrix.env }}
-          tox-args: -c tests/test_factors/
+          tox-env: ${{ matrix.env.tox-env }}
+        id: tox
+      - run: |
+          assert '${{ matrix.env.expected }}' == '${{ steps.tox.outputs.python-version }}'
+        shell: python

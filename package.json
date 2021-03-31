@@ -1,0 +1,26 @@
+{
+  "name": "tox-run",
+  "version": "1.0.0",
+  "description": "Install the appropriate versions of Python (defaults to 3.x) based on a given tox environment, and then execute that environment against the tox version installed there.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greg-hellings/tox-run.git"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "tox"
+  ],
+  "author": "Greg Hellings <greg.hellings@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.6"
+  }
+}
